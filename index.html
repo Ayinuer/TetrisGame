@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TETRIS PRO — Ultimate Arcade Edition</title>
+    
+    <meta name="description" content="A premium, high-performance modern web rendition of the classic Tetris arcade game. Built with HTML5 Canvas and optimized for all devices.">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="author" content="Tetris Pro Team">
+    <meta property="og:title" content="TETRIS PRO — Ultimate Arcade Edition">
+    <meta property="og:description" content="Play the classic Tetris game reimagined for the web — smooth, fast, and beautiful.">
+    <meta property="og:type" content="website">
+
+    <!-- Preload critical fonts for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <!-- Preload icon library -->
+    <link rel="preload" href="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" as="script">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Load icons early -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+</head>
+<body>
+    <div class="game-shell" role="application" aria-label="Tetris Pro Game Interface">
+
+        <header class="game-header">
+            <h1 class="game-title">
+                <i data-lucide="zap" class="icon-accent" aria-hidden="true"></i>
+                TETRIS PRO
+            </h1>
+            <p class="game-subtitle">Ultimate Arcade Edition</p>
+        </header>
+
+        <main class="game-layout">
+
+            <!-- Left Sidebar: Hold & Stats -->
+            <aside class="side-panel left-panel" aria-label="Game statistics and hold piece area">
+
+                <section class="panel-card" aria-labelledby="hold-heading">
+                    <h2 id="hold-heading" class="card-title">
+                        <i data-lucide="save" aria-hidden="true"></i> HOLD
+                    </h2>
+                    <div class="canvas-container">
+                        <canvas 
+                            id="holdCanvas" 
+                            width="120" 
+                            height="120" 
+                            aria-label="Currently held tetromino piece"
+                        ></canvas>
+                    </div>
+                </section>
+
+                <section class="panel-card" aria-labelledby="stats-heading">
+                    <h2 id="stats-heading" class="card-title">
+                        <i data-lucide="bar-chart-3" aria-hidden="true"></i> STATS
+                    </h2>
+
+                    <div class="stat-group" aria-live="polite" aria-atomic="true">
+                        <div class="stat-item">
+                            <span class="stat-label">SCORE</span>
+                            <strong id="scoreDisplay" class="stat-value" aria-label="Score: 0 points">000,000</strong>
+                        </div>
+
+                        <div class="stat-item">
+                            <span class="stat-label">LINES</span>
+                            <strong id="linesDisplay" class="stat-value" aria-label="Lines cleared: 0">0</strong>
+                        </div>
+
+                        <div class="stat-item">
+                            <span class="stat-label">LEVEL</span>
+                            <strong id="levelDisplay" class="stat-value" aria-label="Current level: 1">1</strong>
+                        </div>
+
+                        <div class="stat-item">
+                            <span class="stat-label">TIME</span>
+                            <strong id="timeDisplay" class="stat-value" aria-label="Elapsed time">00:00</strong>
+                        </div>
+                    </div>
+                </section>
+
+            </aside>
+
+            <!-- Center: Game Board -->
+            <section class="game-board-section" aria-label="Active game board area">
+                <div class="board-frame">
+                    
+                    <div id="gameStatus" class="game-overlay hidden" role="status" aria-hidden="true">
+                        <div class="overlay-content">
+                            <span class="overlay-text" id="overlayText">PAUSED</span>
+                            <p class="overlay-subtext" id="overlaySubtext">Press ESC or Pause to Resume</p>
+                        </div>
+                    </div>
+
+                    <canvas 
+                        id="boardCanvas" 
+                        width="300" 
+                        height="600" 
+                        aria-label="Tetris main grid — 10 columns × 20 rows"
+                    ></canvas>
+                </div>
+            </section>
+
+            <!-- Right Sidebar: Next Piece & Controls -->
+            <aside class="side-panel right-panel" aria-label="Next piece preview and game controls">
+
+                <section class="panel-card" aria-labelledby="next-heading">
+                    <h2 id="next-heading" class="card-title">
+                        <i data-lucide="eye" aria-hidden="true"></i> NEXT
+                    </h2>
+                    <div class="canvas-container">
+                        <canvas 
+                            id="nextCanvas" 
+                            width="120" 
+                            height="120" 
+                            aria-label="Upcoming tetromino piece preview"
+                        ></canvas>
+                    </div>
+                </section>
+
+                <section class="panel-card" aria-labelledby="system-heading">
+                    <h2 id="system-heading" class="card-title">
+                        <i data-lucide="sliders" aria-hidden="true"></i> SYSTEM
+                    </h2>
+
+                    <div class="control-actions">
+                        <button 
+                            id="startBtn" 
+                            class="game-btn btn-success" 
+                            aria-label="Start or Resume Game"
+                        >
+                            <i data-lucide="play" aria-hidden="true"></i> START
+                        </button>
+
+                        <button 
+                            id="pauseBtn" 
+                            class="game-btn btn-warning" 
+                            aria-label="Pause Current Game"
+                        >
+                            <i data-lucide="pause" aria-hidden="true"></i> PAUSE
+                        </button>
+
+                        <button 
+                            id="resetGameBtn" 
+                            class="game-btn btn-danger" 
+                            aria-label="Start New Game — Resets Score and Level"
+                        >
+                            <i data-lucide="rotate-ccw" aria-hidden="true"></i> NEW GAME
+                        </button>
+
+                        <button 
+                            id="muteBtn" 
+                            class="game-btn btn-secondary" 
+                            aria-label="Toggle Sound Effects and Music"
+                        >
+                            <i data-lucide="volume-2" aria-hidden="true"></i> SOUND
+                        </button>
+                    </div>
+                </section>
+
+            </aside>
+
+        </main>
+
+        <!-- Controls Reference -->
+        <footer class="controls-panel" aria-labelledby="controls-heading">
+            <h2 id="controls-heading" class="controls-title">
+                <i data-lucide="keyboard" aria-hidden="true"></i> INPUT SYSTEM
+            </h2>
+
+            <div class="controls-grid">
+                <div id="btn-move-left" class="control-key" role="button" tabindex="0" aria-label="Move piece left">
+                    <div class="key-caps"><kbd>◀</kbd></div>
+                    <span class="key-action">Move Left</span>
+                </div>
+
+                <div id="btn-move-right" class="control-key" role="button" tabindex="0" aria-label="Move piece right">
+                    <div class="key-caps"><kbd>▶</kbd></div>
+                    <span class="key-action">Move Right</span>
+                </div>
+
+                <div id="btn-soft" class="control-key" role="button" tabindex="0" aria-label="Soft drop piece">
+                    <div class="key-caps"><kbd>▼</kbd></div>
+                    <span class="key-action">Soft Drop</span>
+                </div>
+
+                <div id="btn-rotate" class="control-key" role="button" tabindex="0" aria-label="Rotate piece">
+                    <div class="key-caps"><kbd>▲</kbd></div>
+                    <span class="key-action">Rotate</span>
+                </div>
+
+                <div id="btn-hard" class="control-key" role="button" tabindex="0" aria-label="Hard drop piece instantly">
+                    <div class="key-caps wide-key"><kbd>SPACE</kbd></div>
+                    <span class="key-action">Hard Drop</span>
+                </div>
+
+                <div id="btn-hold" class="control-key" role="button" tabindex="0" aria-label="Hold or swap current piece">
+                    <div class="key-caps"><kbd>C</kbd></div>
+                    <span class="key-action">Hold</span>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Footer Credits -->
+        <div class="game-footer">
+            <p class="credit-text">© 2024 TETRIS PRO — Built for speed & precision</p>
+        </div>
+
+    </div>
+
+    <!-- Initialize Icons & Game -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) lucide.createIcons();
+        });
+    </script>
+    <script src="app.js" defer></script>
+</body>
+</html>

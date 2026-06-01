@@ -1,0 +1,746 @@
+/* ==========================================================================
+   0. DESIGN SYSTEM VARIABLES & FONTS
+   ========================================================================== */
+
+:root {
+    /* Vibrant Arcade Palette — much richer & brighter */
+    --neon-cyan: #00f0ff;
+    --neon-cyan-bright: #66f9ff;
+    --neon-green: #00ff88;
+    --neon-green-bright: #88ffcc;
+    --neon-pink: #ff00d4;
+    --neon-pink-bright: #ff66e2;
+    --neon-orange: #ff6b00;
+    --neon-orange-bright: #ffaa66;
+    --neon-yellow: #ffe600;
+    --neon-yellow-bright: #fff366;
+    --neon-purple: #a855f7;
+    --neon-purple-bright: #d6b8ff;
+    --neon-blue: #0088ff;
+    --neon-blue-bright: #66bbff;
+
+    /* Dark base but with deep color undertones */
+    --dark-bg: #0a041a;
+    --card-bg: rgba(15, 10, 40, 0.7);
+    --card-bg-alt: rgba(40, 10, 60, 0.6);
+
+    /* Enhanced Neon Glow Effects */
+    --glow-cyan: 0 0 20px rgba(0, 240, 255, 0.6), 0 0 40px rgba(0, 240, 255, 0.3);
+    --glow-green: 0 0 20px rgba(0, 255, 136, 0.6), 0 0 40px rgba(0, 255, 136, 0.3);
+    --glow-pink: 0 0 20px rgba(255, 0, 212, 0.6), 0 0 40px rgba(255, 0, 212, 0.3);
+    --glow-orange: 0 0 20px rgba(255, 107, 0, 0.6), 0 0 40px rgba(255, 107, 0, 0.3);
+    --glow-yellow: 0 0 20px rgba(255, 230, 0, 0.6), 0 0 40px rgba(255, 230, 0, 0.3);
+    --glow-purple: 0 0 20px rgba(168, 85, 247, 0.6), 0 0 40px rgba(168, 85, 247, 0.3);
+    --glow-blue: 0 0 20px rgba(0, 136, 255, 0.6), 0 0 40px rgba(0, 136, 255, 0.3);
+
+    /* Typography */
+    --font-display: 'Press Start 2P', monospace;
+    --font-ui: 'Orbitron', sans-serif;
+}
+
+/* ==========================================================================
+   1. RESET & BASE LAYOUT
+   ========================================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-ui);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    color: #ffffff;
+    background:
+        radial-gradient(circle at 15% 15%, var(--neon-purple) 0%, transparent 50%),
+        radial-gradient(circle at 85% 15%, var(--neon-cyan) 0%, transparent 50%),
+        radial-gradient(circle at 50% 85%, var(--neon-pink) 0%, transparent 55%),
+        radial-gradient(circle at 20% 80%, var(--neon-blue) 0%, transparent 45%),
+        var(--dark-bg);
+    background-attachment: fixed;
+    overflow-x: hidden;
+}
+
+/* ==========================================================================
+   2. GAME SHELL & HEADER Archetype
+   ========================================================================== */
+
+.game-shell {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.game-header {
+    text-align: center;
+    position: relative;
+}
+
+.game-title {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -2px;
+    background: linear-gradient(
+        90deg,
+        var(--neon-cyan),
+        var(--neon-green),
+        var(--neon-yellow),
+        var(--neon-orange),
+        var(--neon-pink),
+        var(--neon-purple)
+    );
+    background-size: 400% 100%;
+    animation: rainbowShift 6s linear infinite;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.4));
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.game-title svg {
+    width: 42px;
+    height: 42px;
+    stroke: var(--neon-yellow);
+    filter: var(--glow-yellow);
+    animation: pulse 2s infinite alternate;
+}
+
+.game-subtitle {
+    font-family: var(--font-ui);
+    color: var(--neon-cyan-bright);
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    font-size: 0.9rem;
+    text-shadow: var(--glow-cyan);
+}
+
+/* ==========================================================================
+   3. STRUCTURAL GRID LAYOUT
+   ========================================================================== */
+
+.game-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr 240px;
+    gap: 30px;
+    align-items: start;
+}
+
+.side-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Left panel with purple theme */
+.left-panel .panel-card {
+    background: linear-gradient(135deg, var(--card-bg), var(--card-bg-alt));
+    border-color: var(--neon-purple-bright);
+    box-shadow: var(--glow-purple), inset 0 0 20px rgba(168, 85, 247, 0.1);
+}
+
+/* Right panel with blue/cyan theme */
+.right-panel .panel-card {
+    background: linear-gradient(135deg, var(--card-bg), rgba(10, 20, 60, 0.7));
+    border-color: var(--neon-cyan-bright);
+    box-shadow: var(--glow-cyan), inset 0 0 20px rgba(0, 240, 255, 0.1);
+}
+
+/* ==========================================================================
+   4. PANEL CARDS & CONTENT ARCHITECTURE
+   ========================================================================== */
+
+.panel-card {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.panel-card:hover {
+    transform: translateY(-4px);
+}
+
+.card-title {
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 10px;
+}
+
+/* Color-code section titles */
+.left-panel .card-title {
+    color: var(--neon-purple-bright);
+    border-bottom: 1px solid rgba(168, 85, 247, 0.3);
+    text-shadow: var(--glow-purple);
+}
+
+.right-panel .card-title {
+    color: var(--neon-cyan-bright);
+    border-bottom: 1px solid rgba(0, 240, 255, 0.3);
+    text-shadow: var(--glow-cyan);
+}
+
+.card-title svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Mini Canvas Containers */
+.canvas-container {
+    background: linear-gradient(180deg, #000022, #110033);
+    border-radius: 12px;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.8), 0 0 10px rgba(255,255,255,0.1);
+}
+
+#holdCanvas,
+#nextCanvas {
+    display: block;
+    margin: 0 auto;
+    background: transparent;
+}
+
+/* ==========================================================================
+   5. CENTRAL MAIN GAME BOARD
+   ========================================================================== */
+
+.game-board-section {
+    display: flex;
+    justify-content: center;
+}
+
+.board-frame {
+    position: relative;
+    padding: 12px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(255, 0, 212, 0.1), rgba(0, 136, 255, 0.1));
+    border: 2px solid var(--neon-pink-bright);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    animation: boardPulse 3s infinite ease-in-out;
+    box-shadow: var(--glow-pink), var(--glow-blue);
+}
+
+#boardCanvas {
+    display: block;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #000011 0%, #0a001a 100%);
+    border: 2px solid var(--neon-green-bright);
+    box-shadow: inset 0 0 50px rgba(0, 255, 136, 0.2);
+}
+
+/* ==========================================================================
+   6. SCREEN STATES & HEADS UP DISPLAY OVERLAYS
+   ========================================================================== */
+
+.game-overlay {
+    position: absolute;
+    inset: 12px;
+    background: rgba(10, 0, 30, 0.85);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: opacity 0.3s ease;
+    border: 1px solid var(--neon-yellow);
+    box-shadow: var(--glow-yellow);
+}
+
+.overlay-content {
+    text-align: center;
+    padding: 20px;
+}
+
+.overlay-text {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    color: var(--neon-yellow);
+    display: block;
+    margin-bottom: 12px;
+    text-shadow: var(--glow-yellow);
+}
+
+.overlay-subtext {
+    font-size: 0.8rem;
+    color: var(--neon-cyan-bright);
+    letter-spacing: 1px;
+    text-shadow: var(--glow-cyan);
+}
+
+.hidden {
+    display: none !important;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   7. HUD METRICS & DATA DISPLAYS
+   ========================================================================== */
+
+.stat-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    border-left: 4px solid;
+    transition: all 0.2s ease;
+}
+
+/* Color-code each stat */
+.stat-item:nth-child(1) { border-color: var(--neon-green); }
+.stat-item:nth-child(2) { border-color: var(--neon-orange); }
+.stat-item:nth-child(3) { border-color: var(--neon-pink); }
+.stat-item:nth-child(4) { border-color: var(--neon-cyan); }
+
+.stat-item:hover {
+    background: rgba(255,255,255,0.07);
+    transform: translateX(4px);
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: #e0e7ff;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+}
+
+.stat-value {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+}
+
+/* Match value color to border */
+.stat-item:nth-child(1) .stat-value { color: var(--neon-green); text-shadow: var(--glow-green); }
+.stat-item:nth-child(2) .stat-value { color: var(--neon-orange); text-shadow: var(--glow-orange); }
+.stat-item:nth-child(3) .stat-value { color: var(--neon-pink); text-shadow: var(--glow-pink); }
+.stat-item:nth-child(4) .stat-value { color: var(--neon-cyan); text-shadow: var(--glow-cyan); }
+
+/* ==========================================================================
+   8. INTERACTIVE ACTION SYSTEM (BUTTONS)
+   ========================================================================== */
+
+.control-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.game-btn {
+    width: 100%;
+    border: none;
+    padding: 14px 18px;
+    border-radius: 10px;
+    color: #ffffff;
+    font-family: var(--font-ui);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid transparent;
+}
+
+.game-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.game-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    filter: brightness(1.2);
+}
+
+.game-btn:active {
+    transform: translateY(1px);
+}
+
+/* System Button Context Colors — BRIGHT & GLOWING */
+.btn-success {
+    background: linear-gradient(135deg, #00994d 0%, var(--neon-green) 100%);
+    box-shadow: var(--glow-green);
+    border-color: var(--neon-green-bright);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #cc5500 0%, var(--neon-orange) 100%);
+    box-shadow: var(--glow-orange);
+    border-color: var(--neon-orange-bright);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #990033 0%, var(--neon-pink) 100%);
+    box-shadow: var(--glow-pink);
+    border-color: var(--neon-pink-bright);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #005599 0%, var(--neon-cyan) 100%);
+    box-shadow: var(--glow-cyan);
+    border-color: var(--neon-cyan-bright);
+}
+
+/* ==========================================================================
+   9. HARDWARE INPUT CONTROLS REGION
+   ========================================================================== */
+
+.controls-panel {
+    background: linear-gradient(135deg, var(--card-bg), rgba(60, 20, 80, 0.6));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 2px solid var(--neon-purple-bright);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--glow-purple);
+}
+
+.controls-title {
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    color: var(--neon-purple-bright);
+    text-align: center;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-shadow: var(--glow-purple);
+}
+
+.controls-title svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--neon-purple-bright);
+}
+
+.controls-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+}
+
+.control-key {
+    background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+    border: 2px solid rgba(255,255,255,0.1);
+    padding: 16px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    user-select: none;
+}
+
+/* Color Identity Glows on Hover for Interactive Keys — MUCH BRIGHTER */
+#btn-move-left:hover, #btn-move-right:hover {
+    border-color: var(--neon-cyan);
+    box-shadow: var(--glow-cyan);
+    background: rgba(0, 240, 255, 0.1);
+    color: var(--neon-cyan-bright);
+}
+#btn-soft:hover {
+    border-color: var(--neon-yellow);
+    box-shadow: var(--glow-yellow);
+    background: rgba(255, 230, 0, 0.1);
+    color: var(--neon-yellow-bright);
+}
+#btn-rotate:hover {
+    border-color: var(--neon-green);
+    box-shadow: var(--glow-green);
+    background: rgba(0, 255, 136, 0.1);
+    color: var(--neon-green-bright);
+}
+#btn-hard:hover {
+    border-color: var(--neon-pink);
+    box-shadow: var(--glow-pink);
+    background: rgba(255, 0, 212, 0.1);
+    color: var(--neon-pink-bright);
+}
+#btn-hold:hover {
+    border-color: var(--neon-purple);
+    box-shadow: var(--glow-purple);
+    background: rgba(168, 85, 247, 0.1);
+    color: var(--neon-purple-bright);
+}
+
+.control-key:hover {
+    transform: translateY(-4px);
+}
+
+.control-key:active {
+    transform: translateY(1px);
+    filter: brightness(0.8);
+}
+
+/* W3C Standard Semantic <kbd> Typing — COLORFUL KEYS */
+kbd {
+    display: inline-block;
+    background: linear-gradient(180deg, #4a0080 0%, #1a0033 100%);
+    border: 2px solid #9933ff;
+    border-bottom: 4px solid #6600cc;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+    box-shadow: 0 0 8px rgba(153, 51, 255, 0.4);
+}
+
+.wide-key {
+    padding: 4px 24px;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    background: linear-gradient(180deg, #006699 0%, #002244 100%);
+    border-color: #00ccff;
+    border-bottom-color: #0088cc;
+    box-shadow: 0 0 8px rgba(0, 204, 255, 0.4);
+}
+
+.key-action {
+    font-size: 0.8rem;
+    color: #cbd5e1;
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   10. INTERFACE ANIMATIONS
+   ========================================================================== */
+
+@keyframes rainbowShift {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+@keyframes pulse {
+    0% { opacity: 0.8; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes boardPulse {
+    0%, 100% {
+        box-shadow: var(--glow-pink), var(--glow-blue);
+        border-color: var(--neon-pink);
+    }
+    50% {
+        box-shadow: var(--glow-purple), var(--glow-green);
+        border-color: var(--neon-purple);
+    }
+}
+
+/* ==========================================================================
+   11. VERTICAL HEIGHT SCREEN OPTIMIZATION (Prevents Scrolling on Laptops)
+   ========================================================================== */
+
+@media (max-height: 900px) {
+    body {
+        padding: 12px 20px;
+    }
+
+    .game-shell {
+        gap: 12px;
+    }
+
+    .game-title {
+        font-size: 2.2rem;
+    }
+    
+    .game-title svg {
+        width: 32px;
+        height: 32px;
+    }
+
+    .game-subtitle {
+        margin-top: 2px;
+        font-size: 0.75rem;
+        letter-spacing: 4px;
+    }
+
+    .game-layout {
+        gap: 15px;
+    }
+
+    .side-panel {
+        gap: 12px;
+        width: 200px;
+    }
+
+    .panel-card {
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    .card-title {
+        margin-bottom: 12px;
+        padding-bottom: 6px;
+    }
+
+    /* CSS Fluid Sizing Matrix Override for Main Grid Frame */
+    .board-frame {
+        max-width: 260px;
+        padding: 8px;
+        border-radius: 16px;
+    }
+
+    #boardCanvas {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 2;
+    }
+
+    #holdCanvas, #nextCanvas {
+        width: 90px;
+        height: 90px;
+    }
+
+    .stat-group {
+        gap: 8px;
+    }
+
+    .stat-item {
+        padding: 8px 12px;
+        border-radius: 8px;
+    }
+
+    .stat-value {
+        font-size: 0.95rem;
+    }
+
+    .game-btn {
+        padding: 10px 14px;
+        font-size: 0.75rem;
+        border-radius: 8px;
+    }
+
+    .controls-panel {
+        padding: 12px 20px;
+        border-radius: 12px;
+    }
+
+    .controls-title {
+        margin-bottom: 12px;
+    }
+
+    .controls-grid {
+        gap: 10px;
+    }
+
+    .control-key {
+        padding: 10px;
+        border-radius: 8px;
+        gap: 6px;
+    }
+    
+    kbd {
+        font-size: 0.8rem;
+        padding: 2px 6px;
+    }
+    
+    .wide-key {
+        padding: 2px 16px;
+    }
+    
+    .key-action {
+        font-size: 0.75rem;
+    }
+}
+
+/* ==========================================================================
+   12. RESPONSIVE MEDIA CONSTRAINTS (Width Queries)
+   ========================================================================== */
+
+@media (max-width: 960px) {
+    body {
+        padding: 20px 10px;
+    }
+
+    .game-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .side-panel {
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .side-panel > * {
+        flex: 1;
+    }
+
+    .game-board-section {
+        grid-row: 1;
+    }
+    
+    .left-panel {
+        grid-row: 2;
+    }
+    
+    .right-panel {
+        grid-row: 3;
+    }
+
+    .game-title {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 560px) {
+    .side-panel {
+        flex-direction: column;
+    }
+
+    .controls-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .board-frame {
+        width: 100%;
+        max-width: 324px;
+    }
+
+    #boardCanvas {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 2;
+    }
+}
