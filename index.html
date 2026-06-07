@@ -1,87 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>TETRIS PRO — Ultimate Arcade Edition</title>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Tetris</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="dark-theme">
-  <div class="game-container">
-    <!-- HEADER -->
-    <header class="game-header">
-      <h1>TETRIS <span>PRO</span></h1>
-      <p>ULTIMATE ARCADE EDITION</p>
-      <button id="themeToggle" class="theme-btn"><i data-lucide="sun-moon"></i></button>
-    </header>
-
-    <!-- MAIN CONTENT -->
-    <main class="game-main">
-      <!-- GAME BOARD -->
-      <div class="board-wrapper">
-        <canvas id="boardCanvas" width="300" height="600"></canvas>
-        <div id="gameStatus" class="overlay hidden">
-          <div class="overlay-text"></div>
-          <div class="overlay-subtext"></div>
-        </div>
-      </div>
-
-      <!-- SIDEBAR / INFO -->
-      <div class="game-sidebar">
-        <div class="preview-group">
-          <label>NEXT</label>
-          <canvas id="nextCanvas" width="100" height="100"></canvas>
-        </div>
-        <div class="preview-group">
-          <label>HOLD</label>
-          <canvas id="holdCanvas" width="100" height="100"></canvas>
-        </div>
-
-        <div class="stats-panel">
-          <div class="stat-item">
-            <span>SCORE</span>
-            <strong id="scoreDisplay">000000</strong>
-          </div>
-          <div class="stat-item">
-            <span>LINES</span>
-            <strong id="linesDisplay">0</strong>
-          </div>
-          <div class="stat-item">
-            <span>LEVEL</span>
-            <strong id="levelDisplay">1</strong>
-          </div>
-          <div class="stat-item">
-            <span>HIGH</span>
-            <strong id="highScoreDisplay">0</strong>
-          </div>
-        </div>
-
-        <div class="control-buttons">
-          <button id="startBtn" class="btn primary">PLAY</button>
-          <button id="pauseBtn" class="btn">PAUSE</button>
-          <button id="resetGameBtn" class="btn danger">RESET</button>
-          <button id="muteBtn" class="btn icon-btn"><i data-lucide="volume-2"></i></button>
-        </div>
-      </div>
-    </main>
-
-    <!-- MOBILE CONTROLS -->
-    <div class="mobile-controls">
-      <div class="ctrl-row">
-        <button id="btn-move-left" class="ctrl-btn">◀</button>
-        <button id="btn-rotate" class="ctrl-btn">🔄</button>
-        <button id="btn-move-right" class="ctrl-btn">▶</button>
-      </div>
-      <div class="ctrl-row">
-        <button id="btn-hold" class="ctrl-btn">📥</button>
-        <button id="btn-soft" class="ctrl-btn">▼</button>
-        <button id="btn-hard" class="ctrl-btn">⏷</button>
-      </div>
+<body>
+    <div class="playful-bg" aria-hidden="true">
+        <div class="emoji-bubble emoji-1">🎉</div>
+        <div class="emoji-bubble emoji-2">✨</div>
+        <div class="emoji-bubble emoji-3">😍</div>
     </div>
-  </div>
-
-  <script src="app.js"></script>
-  <script>lucide.createIcons();</script>
+    <div class="game-shell">
+    <div class="left-panel">
+        <div class="stat-card stat-joy">
+            <span class="label">Joy • 🎨</span>
+            <h2 id="score">0</h2>
+        </div>
+        <div class="stat-card stat-lines">
+            <span class="label">Line Clears • ✂️</span>
+            <h2 id="lines">0</h2>
+        </div>
+        <div class="stat-card stat-stage">
+            <span class="label">Mood Stage • 🧩</span>
+            <h2 id="level">1</h2>
+        </div>
+    </div>
+    <div class="game-stage">
+        <canvas id="game" width="300" height="600"></canvas>
+        <div class="overlay hidden" id="overlay">
+            <h1>GAME OVER</h1>
+            <p>Your feelings overflowed ✨</p>
+            <button id="restartBtn">Play Again</button>
+        </div>
+    </div>
+    <div class="right-panel">
+        <div class="preview-box">
+            <h3>Next • ✨</h3>
+            <canvas id="next" width="120" height="120"></canvas>
+        </div>
+        <div class="preview-box">
+            <h3>Hold • 🧸</h3>
+            <canvas id="hold" width="120" height="120"></canvas>
+        </div>
+    </div>
+</div>
+<div class="controls">
+    <button id="startBtn">▶ Start</button>
+    <button id="pauseBtn">⏸ Pause</button>
+    <button id="resetBtn">🔄 Reset</button>
+        <button id="holdBtn" class="hold-btn" aria-label="Hold piece"><span data-i18n-key="holdBtn">🤗 Hold</span></button>
+        <button id="themeBtn" class="theme-btn" aria-pressed="false" aria-label="Toggle theme">
+                <span class="theme-icon" aria-hidden="true">🌙</span>
+                <span class="theme-text" data-i18n-key="themeText">Theme</span>
+        </button>
+        <label for="langSelect" class="sr-only">Language</label>
+        <select id="langSelect" aria-label="Select language">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+        </select>
+</div>
+<!-- HOW TO PLAY: collapsible native widget -->
+<details id="howto" class="howto" aria-label="How to play">
+    <summary data-i18n-key="howtoSummary">How to play ▸</summary>
+    <div class="howto-body" data-i18n-key="howtoBody"></div>
+</details>
+<script src="app.js"></script>
 </body>
 </html>

@@ -1,51 +1,59 @@
-# 🎮 TETRIS PRO — Ultimate Arcade Edition
+# 🎮 Emotion Tetris — Playful Tetris in the Browser
 
-![Tetris Pro Banner](https://i.imgur.com/9ZbX7QH.png)
+A compact HTML5 Tetris clone with a playful UI, light/dark themes, hold/next previews, and simple localization.
 
-> **The classic Tetris experience, reimagined for the modern web — vibrant, responsive, and packed with premium features.**
-
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![License: Free](https://img.shields.io/badge/License-Free-green?style=for-the-badge)
+Open `index.html` in a browser to play — no build tools required.
 
 ---
 
-## 🔗 LIVE DEMO
+## Features
 
-👉 **[Click Here to Play Now!](https://your-demo-link.com)**  
-*(Replace the link above with your actual hosted URL — e.g. GitHub Pages, Vercel, Netlify)*
-
-✅ **No download needed — works on desktop, tablet & mobile!**
-
----
-
-## 🖼️ Game Preview
-
-*(Replace these links with your actual screenshots after uploading them)*
-
-### 📸 Main Game View
-![Gameplay Screenshot](https://i.imgur.com/tUjKqLb.png)
-
-### 📱 Mobile Responsive View
-![Mobile View Screenshot](https://i.imgur.com/5xQrZ7s.png)
+- Responsive gameplay (desktop + mobile)
+- Hold / Next previews
+- Light (colorful paper) and Dark theme with a theme toggle
+- Simple localization (English + Español)
+- Keyboard and on-screen controls
+- Stores high score and theme/language preferences in localStorage
 
 ---
 
-## ✨ Key Features
+## Files
 
-✅ **Stunning Visuals** — Neon colors, glowing blocks, gradients, particle explosions, screen shake, and smooth animations  
-✅ **Authentic Gameplay** — Standard SRS rotation system, 7-bag randomizer, ghost piece preview, hold piece, and hard drop mechanics  
-✅ **Fully Responsive** — Perfectly playable on **desktop, tablets, and mobile phones** — no scrolling required  
-✅ **Rich Audio System** — Retro sound effects, level-up jingles, and built-in sound toggle  
-✅ **Progression System** — Increasing speed, levels, line goals, and scoring multipliers  
-✅ **High Score Saving** — Automatically saves your best score to browser storage  
-✅ **Full Controls** — Supports both **Keyboard** and **On-Screen Touch/Mouse Buttons**  
-✅ **Polished UI** — Arcade-style HUD, dynamic overlays, pause/resume, and reset functionality
+- `index.html` — Main UI and markup
+- `style.css` — All styles and theme variables
+- `app.js` — Game logic, rendering, input handling, and i18n glue
 
 ---
 
-## 🚀 Quick Start Guide
+## Controls
 
-### 1. Required Files
-Make sure you have these 3 files in the same folder:
+- ← / → : move piece left / right
+- ↑ : rotate piece
+- ↓ : soft drop
+- Space : hard drop
+- Hold button : save/swap the current piece
+- Start / Pause / Reset : control the game
+- Theme : toggle light/dark themes
+- Language selector : switch UI language (English / Español)
+
+Mobile on-screen controls match the desktop controls.
+
+---
+
+## Tips
+
+- Clear multiple rows at once for higher scoring bonuses.
+- Use Hold to store a useful piece for later.
+- Keep the stack as flat as possible to avoid losing space.
+
+---
+
+## Contributing
+
+Contributions welcome: open issues for bugs or feature requests, or submit pull requests for small improvements.
+
+---
+
+## License
+
+Use or adapt this project freely for learning and prototyping. If you redistribute, please include attribution.
