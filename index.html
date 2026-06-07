@@ -56,29 +56,15 @@
         <span class="theme-text">Theme</span>
     </button>
 </div>
-<!-- HOW TO PLAY: collapsible native widget -->
-<details id="howto" class="howto" aria-label="How to play">
-    <summary>How to play ▸</summary>
-    <div class="howto-body">
-        <p>Welcome! Stack shapes to clear rows and keep the board tidy.</p>
-        <h4>Controls</h4>
-        <ul>
-            <li><strong>← / →</strong> — Move piece left / right</li>
-            <li><strong>↑</strong> — Rotate piece</li>
-            <li><strong>↓</strong> — Soft drop</li>
-            <li><strong>Space</strong> / Hard drop — Drop piece fast</li>
-            <li><strong>Hold</strong> — Save the current piece for later</li>
-            <li><strong>Start / Pause / Reset</strong> — Control the game</li>
-        </ul>
-        <h4>Scoring & Tips</h4>
-        <ul>
-            <li>Clear rows to score points — multi-row clears give bigger bonuses.</li>
-            <li>Use Hold to save a helpful piece for a tricky gap.</li>
-            <li>Watch the <em>Next</em> preview to plan ahead.</li>
-        </ul>
-        <p class="micro-copy">Tip: Keep your stack even and avoid tall spires.</p>
+    <!-- On-screen touch controls for mobile -->
+    <div class="touch-controls" id="touchControls" aria-hidden="false">
+        <button id="tc-left" class="tc-btn" aria-label="Move left">◀</button>
+        <button id="tc-rotate" class="tc-btn" aria-label="Rotate">⤴︎</button>
+        <button id="tc-right" class="tc-btn" aria-label="Move right">▶</button>
+        <button id="tc-soft" class="tc-btn" aria-label="Soft drop">▼</button>
+        <button id="tc-hard" class="tc-btn tc-hard" aria-label="Hard drop">⤓</button>
     </div>
-</details>
+<!-- How-to section removed per request -->
 <script src="app.js"></script>
 </body>
 </html>

@@ -250,9 +250,10 @@ button:active{
     body{
         padding:10px;
     }
+    /* make the main game canvas use available width while keeping 2:1 aspect */
     #game{
-        width:260px;
-        height:520px;
+        width: min(84vw, 320px);
+        height: calc(min(84vw, 320px) * 2);
     }
     .stat-card{
         width:150px;
@@ -265,4 +266,59 @@ button:active{
     .overlay h1{
         font-size:2rem;
     }
+    /* touch controls visible on small screens */
+    .touch-controls{
+        margin-top:14px;
+        display:flex;
+        gap:8px;
+        justify-content:center;
+        align-items:center;
+        z-index:3;
+        flex-wrap:wrap;
+    }
+    .tc-btn{
+        width:54px;
+        height:54px;
+        border-radius:12px;
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        font-size:1.1rem;
+        padding:0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+        border:1px solid var(--card-border);
+        color:var(--text);
+        box-shadow: var(--btn-shadow);
+        touch-action: manipulation;
+    }
+    .tc-btn:active{ transform: translateY(1px) scale(0.99); }
+    .tc-hard{ background: linear-gradient(135deg, var(--accent-1, #ffd6a5), var(--accent-2, #fdc2ff)); color: var(--text); }
+
+    /* compact layout tweaks to reduce vertical scrolling */
+    .game-shell{
+        padding:12px;
+        gap:12px;
+        max-width:940px;
+        max-height: calc(100vh - 120px); /* leave room for controls and browser UI */
+        overflow: hidden;
+    }
+    /* hide left stats to save vertical space on small screens */
+    .left-panel{ display:none; }
+    /* float the preview boxes as a small overlay in the top-right corner */
+    .right-panel{
+        position: absolute;
+        top:12px;
+        right:12px;
+        display:flex;
+        flex-direction:column;
+        gap:8px;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        z-index:4;
+    }
+    .preview-box{ padding:8px; border-radius:10px; width:84px; text-align:center }
+    #next, #hold{ width:80px; height:80px }
+    /* reduce the control bar height so it doesn't push content */
+    .controls{ margin-top:12px; gap:8px }
 }

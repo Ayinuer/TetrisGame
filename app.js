@@ -408,6 +408,55 @@ document
 };
 startGame();
 
+// --- Mobile touch controls wiring ---
+function safeMoveLeft(){
+    if(!gameRunning || paused || gameOver) return;
+    currentPiece.x--;
+    if(collision(currentPiece.shape, currentPiece.x, currentPiece.y)) currentPiece.x++;
+}
+function safeMoveRight(){
+    if(!gameRunning || paused || gameOver) return;
+    currentPiece.x++;
+    if(collision(currentPiece.shape, currentPiece.x, currentPiece.y)) currentPiece.x--;
+}
+function safeRotate(){
+    if(!gameRunning || paused || gameOver) return;
+    rotate();
+}
+function safeSoft(){
+    if(!gameRunning || paused || gameOver) return;
+    moveDown();
+}
+function safeHard(){
+    if(!gameRunning || paused || gameOver) return;
+    // drop until collision
+    while(!collision(currentPiece.shape, currentPiece.x, currentPiece.y+1)){
+        currentPiece.y++;
+    }
+    merge();
+}
+
+function addRepeatHold(el, action, interval=120){
+    let id = null;
+    const start = (e)=>{ e.preventDefault(); action(); id = setInterval(action, interval); };
+    const end = ()=>{ if(id) clearInterval(id); id = null; };
+    el.addEventListener('pointerdown', start);
+    window.addEventListener('pointerup', end);
+    el.addEventListener('pointercancel', end);
+    el.addEventListener('pointerleave', end);
+}
+
+const tcLeft = document.getElementById('tc-left');
+const tcRight = document.getElementById('tc-right');
+const tcRotate = document.getElementById('tc-rotate');
+const tcSoft = document.getElementById('tc-soft');
+const tcHard = document.getElementById('tc-hard');
+if(tcLeft) addRepeatHold(tcLeft, safeMoveLeft, 120);
+if(tcRight) addRepeatHold(tcRight, safeMoveRight, 120);
+if(tcRotate) tcRotate.addEventListener('click', safeRotate);
+if(tcSoft) addRepeatHold(tcSoft, safeSoft, 120);
+if(tcHard) tcHard.addEventListener('click', safeHard);
+
 // THEME: initialize from localStorage and manage button state
 function setThemeButton(isLight){
     const btn = document.getElementById('themeBtn');
