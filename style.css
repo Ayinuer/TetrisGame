@@ -321,4 +321,40 @@ button:active{
     #next, #hold{ width:80px; height:80px }
     /* reduce the control bar height so it doesn't push content */
     .controls{ margin-top:12px; gap:8px }
+    /* mobile header */
+    .mobile-header{
+        position: fixed;
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        display:flex;
+        justify-content:space-between;
+        gap:8px;
+        padding:8px 12px;
+        background: rgba(0,0,0,0.35);
+        border-radius:12px;
+        z-index:6;
+        align-items:center;
+    }
+    .mobile-header .mh-item{ font-weight:700; color:var(--text); font-size:0.98rem }
+
+    .touch-controls{
+        position: fixed;
+        bottom: 10px;
+        left: 8px;
+        right: 8px;
+        margin:0 auto;
+        display:flex;
+        gap:8px;
+        justify-content:center;
+        align-items:center;
+        z-index:5;
+        flex-wrap:nowrap;
+        background: transparent;
+        padding:6px;
+    }
+
+    /* ensure canvas fits available vertical space accounting for header and controls */
+    .game-stage{ max-height: calc(100vh - 150px); overflow:hidden }
+    #game{ height:100%; }
 }

@@ -243,6 +243,13 @@ function updateUI(){
     scoreEl.textContent = score;
     linesEl.textContent = lines;
     levelEl.textContent = level;
+    // update mobile header (if present)
+    const mS = document.getElementById('mobileScore');
+    const mL = document.getElementById('mobileLines');
+    const mV = document.getElementById('mobileLevel');
+    if(mS) mS.textContent = score;
+    if(mL) mL.textContent = lines;
+    if(mV) mV.textContent = level;
 }
 function moveDown(){
     currentPiece.y++;
