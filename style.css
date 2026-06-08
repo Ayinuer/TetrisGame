@@ -321,22 +321,46 @@ button:active{
     #next, #hold{ width:80px; height:80px }
     /* reduce the control bar height so it doesn't push content */
     .controls{ margin-top:12px; gap:8px }
-    /* mobile header */
+    /* Mobile: emphasize Start button, mute other controls */
+    .controls button{ flex: 1 1 auto; min-width:60px; }
+    .controls button:not(#startBtn){
+        background: rgba(255,255,255,0.04);
+        color: var(--text);
+        border:1px solid rgba(255,255,255,0.06);
+        box-shadow: none;
+        opacity:0.95;
+    }
+    #startBtn{
+        background: linear-gradient(135deg, var(--color-primary, #FF6B6B), var(--color-accent, #FFD93D));
+        color: #102030;
+        font-size:1.05rem;
+        padding:14px 20px;
+        box-shadow: 0 10px 26px rgba(0,0,0,0.28);
+        border: none;
+        transform: translateY(0);
+    }
+    /* mobile header: compact centered pill with small badges */
     .mobile-header{
         position: fixed;
-        top: 8px;
-        left: 8px;
-        right: 8px;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
         display:flex;
-        justify-content:space-between;
         gap:8px;
-        padding:8px 12px;
-        background: rgba(0,0,0,0.35);
-        border-radius:12px;
+        padding:6px 10px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+        border-radius:999px;
         z-index:6;
         align-items:center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.22);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
     }
-    .mobile-header .mh-item{ font-weight:700; color:var(--text); font-size:0.98rem }
+    .mobile-header .mh-item{ display:flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; background: rgba(255,255,255,0.02); font-weight:700; color:var(--text); font-size:0.95rem }
+    .mobile-header .mh-dot{ width:10px; height:10px; border-radius:50%; display:inline-block }
+    .mobile-header .mh-score .mh-dot{ background: var(--accent-joy); }
+    .mobile-header .mh-lines .mh-dot{ background: var(--accent-lines); }
+    .mobile-header .mh-level .mh-dot{ background: var(--accent-stage); }
 
     .touch-controls{
         position: fixed;
@@ -353,6 +377,9 @@ button:active{
         background: transparent;
         padding:6px;
     }
+    /* Make the primary touch button (hard drop) more colorful so it's easy to see */
+    .tc-hard{ background: linear-gradient(135deg, var(--color-accent, #FFD93D), var(--color-teal, #00C2A8)); color:#102030; box-shadow: 0 8px 18px rgba(0,0,0,0.18); }
+    .tc-btn{ background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.04); }
 
     /* ensure canvas fits available vertical space accounting for header and controls */
     .game-stage{ max-height: calc(100vh - 150px); overflow:hidden }
